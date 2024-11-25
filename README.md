@@ -19,13 +19,12 @@
 **3. Data Analysis and Visualization:**
 * **Statistical Analysis:** Use statistical tests to compare different experimental conditions.
 * **Visualization:** Create visualizations to understand the spatiotemporal dynamics of gut motility.
-* **Model Development:** Develop mathematical models to simulate gut motility and test hypotheses.
 
 **Key Tools and Techniques:**
 
 * **Image Processing:** Techniques like thresholding, filtering, and morphological operations.
 * **Signal Processing:** Fourier analysis, wavelet analysis, and time-frequency analysis.
 * **Machine Learning:** For advanced analysis and pattern recognition.
-* **Programming Languages:** Python (with libraries like NumPy, SciPy, OpenCV, and Matplotlib) for data analysis, visualization, and model development.
+* **Programming Languages:** Python (with libraries like NumPy, SciPy, OpenCV, and Matplotlib) and MATLAB for data analysis, visualization, and model development.
 
-By following these steps and leveraging the power of computational tools, researchers can gain valuable insights into the complex mechanisms underlying gut motility.
+By following these steps and leveraging the power of computational tools, we can gain valuable insights into the complex mechanisms underlying gut motility.
