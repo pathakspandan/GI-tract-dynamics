@@ -1,21 +1,48 @@
 function analyze_ttx_experiment(config)
+
 % ANALYZE_TTX_EXPERIMENT Modular analysis of TTX gut motility data across multiple phases
 %
-% Input:
-%   config : struct with the following fields:
-%       .month, .date      - strings for experiment folder
-%       .phase_files       - cell array of .mat filenames (without path)
-%       .gap_mins          - vector of gap durations (min) between phases
-%       .n_parts           - vector of window division counts per phase
-%       .re_len            - gut length in mm (default: 19.79)
-%       .Fs                - sampling rate in Hz (default: 3)
-%       .f_span            - frequency span (default: 0.04)
-%       .area_thresh       - threshold for wave region (default: 100)
-%       .smoothing_window  - moving mean window size (default: 180)
-%       .plot_ylim         - y-axis limit for power plot (e.g., [0 1e-3])
-%       .legend_labels     - cell array of legend entries
-%       .save_flag         - 0 or 1
+% This function performs batch analysis of dorsoventral velocity kymographs
+% from TTX experiments, computing frequency-based motility metrics and visualizing
+% changes in bandpower over time across multiple experimental phases.
 %
+% INPUT:
+%   config : struct with the following fields:
+%       .month              - string: experiment month (e.g., '09')
+%       .date               - string: experiment date (e.g., '11')
+%       .phase_files        - cell array of strings: .mat filenames for each phase
+%       .gap_mins           - vector of numeric gaps (in minutes) between phases
+%       .n_parts            - vector of ints: number of time windows per phase
+%       .re_len             - (optional) gut length in mm (default: 19.79)
+%       .Fs                 - (optional) sampling frequency in Hz (default: 3)
+%       .f_span             - (optional) frequency window around peak (default: 0.04)
+%       .area_thresh        - (optional) minimum size threshold for wave detection (default: 100)
+%       .smoothing_window   - (optional) window size for smoothing (default: 180)
+%       .plot_ylim          - 2-element vector [min, max] for y-axis limits of power plot
+%       .legend_labels      - cell array of strings: labels for each phase in the plot
+%       .save_flag          - 0 or 1: if 1, saves regularity and peristalsis data
+%
+% OUTPUT:
+%   - A figure showing smoothed bandpower (mm/s)^2 vs. time (minutes),
+%     with separate curves for each phase and vertical lines marking transitions.
+%   - If `save_flag == 1`, saves the following files per phase:
+%       > Regularity data: 'reg_TTX_<month><date>_<phase_file>.mat'
+%       > Peristalsis data: 'sv_TTX_<month><date>_<phase_file>.mat'
+%
+% NOTE:
+%   - This function does not return any variables to the workspace.
+%   - Assumes all .mat files contain a variable like `vy2avg` (2D velocity matrix).
+%
+% EXAMPLE USAGE:
+%   config.month = '09';
+%   config.date = '11';
+%   config.phase_files = {'TTX_091123_p1.mat', 'TTX_091123_p2.mat', 'TTX_091123_p3.mat'};
+%   config.n_parts = [2, 2, 12];
+%   config.gap_mins = [910, 27];
+%   config.plot_ylim = [0 1e-3];
+%   config.legend_labels = {'Baseline', 'TTX', '3-hour wash'};
+%   config.save_flag = 0;
+%   analyze_ttx_experiment(config);
 
 % Defaults
 if ~isfield(config, 're_len'), config.re_len = 19.79; end

@@ -1,13 +1,48 @@
 function visualize_wave_data(phases, metric_list, variable, cmap, shapes, selected_metrics)
-    % visualize_wave_data loads, cleans, and plots wave frequency data across phases.
-    %
-    % Inputs:
-    % - phases: cell array of strings (e.g., {'p1','p2','p3'})
-    % - metric_list: cell array of strings (e.g., {'ap', 'pa', 'sw', 'tot'})
-    % - variable: string, control variable for `removal_control` (e.g., 'N7', 'sal')
-    % - cmap: colormap matrix [n x 3]
-    % - shapes: character array for scatter markers (e.g., ['o';'p';'d'])
-    % - selected_metrics: cell array of 2-element cell arrays (metric pairs to compare)
+%{
+visualize_wave_data loads, processes, and visualizes wave frequency data 
+across experimental phases for different metrics.
+
+INPUTS:
+- phases: cell array of strings indicating experimental phases 
+          (e.g., {'p1','p2','p3'})
+- metric_list: cell array of metric types (e.g., {'ap', 'pa', 'sw', 'tot'})
+- variable: string, used for filtering data in `removal_control` 
+            (e.g., 'N7', 'sal')
+- cmap: colormap matrix [N x 3] used for coloring scatter points
+- shapes: character array specifying marker shape per group 
+          (e.g., ['o'; 'p'; 'd'])
+- selected_metrics: cell array of groupings to compare, where each group 
+                    is a cell array of metric_phase combinations 
+                    (e.g., {'ap_p1', 'ap_p2'})
+
+OUTPUTS:
+- No returned variables. The function directly generates the following plots:
+    - One figure with subplots, one for each comparison group in 
+      `selected_metrics`
+    - Each subplot contains:
+        • Boxplots of selected metric data across phases
+        • Overlayed scatter points for individual data points
+        • Paired lines connecting matched data points (if applicable)
+
+USAGE EXAMPLE:
+    phases = {'p1', 'p2', 'p3'};
+    metric_list = {'ap', 'pa', 'sw', 'tot'};
+    variable = 'N7';
+    cmap = [0 0.4470 0.7410; 0.8500 0.3250 0.0980; ...
+            0.9290 0.6940 0.1250; 0.4940 0.1840 0.5560];
+    shapes = ['o'; 'p'; 'd'; 's'];
+    selected_metrics = {
+        {'ap_p1', 'ap_p2', 'ap_p3'},
+        {'tot_p2', 'tot_p3'}
+    };
+    visualize_wave_data(phases, metric_list, variable, cmap, shapes, selected_metrics);
+
+NOTES:
+- Assumes a fixed base path for loading: 
+  'E:\Spandan\PSC Desktop Backup\Codes\Statistics_Matrices\'
+- Uses `removal_control` to preprocess each dataset before visualization
+%}
 
     base_path = 'E:\\Spandan\\PSC Desktop Backup\\Codes\\Statistics_Matrices\\';
     data_struct = struct();
