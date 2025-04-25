@@ -46,7 +46,7 @@
   * Use first 15 minutes of Phase 3
 * Rationale:
   * Capture short-term changes following 5-HT application.
-  * Supported by statistical testing between 15-min windows (see Supplementary Fig. 1).
+  * Supported by statistical testing between 15-min windows.
 
 ### 7. Data Analysis and Visualization
 * **Statistical Analysis:**
